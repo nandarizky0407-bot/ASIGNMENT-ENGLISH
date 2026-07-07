@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Quiz Assignment - Updated Theme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Afacad+Flux:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #bc84ee;
+            --secondary: #dcfd8b;
+            --accent: #ff823a;
+            /* Mengubah background utama container menjadi biru pastel lembut */
+            --bg: #e0f2fe; 
+            --text: #1e293b;
+            --white: #ffffff;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            /* Mengubah latar belakang luar halaman menjadi biru cerah yang senada */
+            background-color: #bae6fd;
+            display: grid;
+            place-items: center;
+            min-height: 100vh;
+            font-family: 'Afacad Flux', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .slide-container {
+            width: 1000px;
+            min-height: 650px;
+            background-color: var(--bg);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            position: relative;
+            display: none;
+            flex-direction: column;
+            padding: 40px;
+            margin: 20px;
+        }
+
+        .slide-container.active { display: flex; }
+
+        h1, h2, h3 { font-family: 'Comfortaa', cursive; color: var(--text); }
+        h1 { font-size: 45px; margin-bottom: 20px; text-align: center; }
+        .slide-title { font-size: 32px; margin-bottom: 20px; border-bottom: 4px dashed var(--primary); padding-bottom: 10px; width: fit-content; }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            transition: transform 0.2s, background 0.2s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-family: 'Comfortaa', cursive;
+        }
+        .btn:hover { transform: scale(1.05); }
+        .btn-primary { background-color: var(--primary); color: white; }
+        .btn-secondary { background-color: var(--secondary); color: var(--text); }
+        .btn-accent { background-color: var(--accent); color: white; }
+        .btn:disabled { background-color: #cbd5e1; cursor: not-allowed; transform: none; color: #64748b; }
+
+        .quiz-menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
+        .question-card { background: white; padding: 25px; border-radius: 20px; border: 3px solid var(--primary); margin-top: 15px; }
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+        .option-btn { background: #f1f5f9; padding: 12px; border-radius: 12px; text-align: left; border: 2px solid transparent; cursor: pointer; font-size: 16px; transition: all 0.2s; }
+        .option-btn.selected { border-color: var(--primary); background: #f5f3ff; font-weight: bold; }
+        
+        .feedback-area { margin-top: 15px; padding: 15px; border-radius: 12px; display: none; }
+        .discussion { background: #f0fdf4; border-left: 5px solid #16a34a; color: #166534; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; border-radius: 12px; overflow: hidden; }
+        th, td { padding: 10px; border-bottom: 1px solid #e2e8f0; text-align: center; font-size: 14px; }
+        th { background: var(--primary); color: white; }
+        .table-wrapper { max-height: 300px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 12px; }
+
+        input[type="text"] {
+            padding: 12px;
+            border-radius: 12px;
+            border: 3px solid var(--primary);
+            font-size: 18px;
+            width: 350px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: inherit;
+        }
+        
+        .flex-center { display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; }
+    </style>
+</head>
+<body>
+
+    <div class="slide-container active" id="slide1">
+        <div class="flex-center">
+            <i class="fa-solid fa-graduation-cap" style="font-size: 80px; color: var(--primary); margin-bottom: 20px;"></i>
+            <h1>Fun English Quiz Assignment</h1>
+            <p style="font-size: 18px; color: #64748b; margin-bottom: 30px;">Mari uji kemampuan Bahasa Inggris kita dengan cara yang menyenangkan!</p>
+            <input type="text" id="studentName" placeholder="Masukkan Nama Kamu Disini...">
+            <button class="btn btn-primary" onclick="startPresentation()">Mulai Kuis <i class="fa-solid fa-rocket"></i></button>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide2">
+        <h2 class="slide-title">Daftar Materi Ujian</h2>
+        <p style="font-size: 18px; margin-bottom: 20px;">Berikut adalah topik-topik yang akan diujikan pada kuis ini:</p>
+        <div style="display: flex; gap: 30px; align-items: center; flex-grow: 1;">
+            <div style="flex: 1;">
+                <ul style="font-size: 20px; list-style: none; padding: 0; margin: 0;">
+                    <li style="margin-bottom: 15px; background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid var(--primary);">
+                        <i class="fa-solid fa-handshake" style="color: var(--primary); margin-right: 10px;"></i> 1. Greeting and Introduction
+                    </li>
+                    <li style="margin-bottom: 15px; background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid var(--accent);">
+                        <i class="fa-solid fa-list-ol" style="color: var(--accent); margin-right: 10px;"></i> 2. Number (Ordinal & Cardinal)
+                    </li>
+                    <li style="margin-bottom: 15px; background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid #ef4444;">
+                        <i class="fa-solid fa-palette" style="color: #ef4444; margin-right: 10px;"></i> 3. Color
+                    </li>
+                    <li style="margin-bottom: 15px; background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid #10b981;">
+                        <i class="fa-solid fa-house" style="color: #10b981; margin-right: 10px;"></i> 4. My House Object
+                    </li>
+                    <li style="margin-bottom: 15px; background: white; padding: 12px 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid #3b82f6;">
+                        <i class="fa-solid fa-bus" style="color: #3b82f6; margin-right: 10px;"></i> 5. Places and Transportation
+                    </li>
+                </ul>
+            </div>
+            <div style="flex: 1; text-align: center;">
+                <i class="fa-solid fa-book-open-reader" style="font-size: 120px; color: var(--accent); opacity: 0.8; margin-bottom: 20px;"></i>
+                <br>
+                <button class="btn btn-accent" onclick="nextSlide(3)">Masuk ke Menu Tes <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide3">
+        <div id="testMenuArea">
+            <h2 class="slide-title">Pilih Subtest</h2>
+            <p style="font-size: 16px;">Selesaikan semua subtest di bawah ini untuk mendapatkan total skor maksimum 100.</p>
+            <div class="quiz-menu" id="testMenu">
+                <button class="btn btn-secondary" id="menuBtn1" onclick="startTest(1)">Test 1: Kosa Kata (20 Soal - @1 Poin)</button>
+                <button class="btn btn-secondary" id="menuBtn2" onclick="startTest(2)">Test 2: Situasi Kontekstual (10 Soal - @2 Poin)</button>
+                <button class="btn btn-secondary" id="menuBtn3" onclick="startTest(3)">Test 3: Kalimat Rumpang (15 Soal - @2 Poin)</button>
+                <button class="btn btn-secondary" id="menuBtn4" onclick="startTest(4)">Test 4: Membaca Narasi (5 Soal - @2 Poin)</button>
+                <button class="btn btn-secondary" id="menuBtn5" onclick="startTest(5)">Test 5: Percakapan Panjang (10 Soal - @2 Poin)</button>
+            </div>
+            <div id="actionToScore" style="margin-top: 30px; text-align: center; display: none;">
+                <button class="btn btn-primary" onclick="nextSlide(4)">Lihat Lembar Skor Akhir <i class="fa-solid fa-square-poll-vertical"></i></button>
+            </div>
+        </div>
+
+        <div id="quizEngine" style="display: none; flex-direction: column; flex-grow: 1;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">
+                <h3 id="currentTestTitle" style="margin: 0; color: var(--primary);">Subtest X</h3>
+                <span id="questionProgress" style="font-weight: bold; background: var(--white); padding: 5px 15px; border-radius: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">1 / 20</span>
+            </div>
+            
+            <div id="narrativeBox" style="background: #f1f5f9; padding: 15px; border-radius: 12px; margin-top: 15px; border-left: 5px solid var(--accent); font-style: italic; font-size: 15px; max-height: 180px; overflow-y: auto; white-space: pre-line;">
+                Teks Bacaan...
+            </div>
+
+            <div class="question-card">
+                <p id="questionText" style="font-size: 18px; font-weight: bold; margin: 0 0 15px 0;">Pertanyaan soal...</p>
+                <div class="options-grid" id="optionsGrid"></div>
+                
+                <div id="feedbackBox" class="feedback-area discussion">
+                    <i class="fa-solid fa-circle-info"></i> <strong>Pembahasan:</strong> <span id="discussionText">...</span>
+                </div>
+            </div>
+
+            <div style="margin-top: auto; padding-top: 20px; display: flex; gap: 15px; justify-content: center;">
+                <button class="btn btn-accent" id="checkBtn" onclick="checkCurrentAnswer()">Cek Jawaban</button>
+                <button class="btn btn-secondary" id="discussBtn" onclick="toggleDiscussion()" disabled>Pembahasan</button>
+                <button class="btn btn-primary" id="nextQuestBtn" onclick="nextQuestion()" style="display: none;">Soal Berikutnya <i class="fa-solid fa-chevron-right"></i></button>
+                <button class="btn btn-primary" id="finishTestBtn" onclick="finishTest()" style="display: none;">Selesai Subtest <i class="fa-solid fa-circle-check"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide4">
+        <h2 class="slide-title">Lembar Hasil Evaluasi Siswa</h2>
+        <div style="display: flex; gap: 30px; flex-grow: 1; align-items: stretch;">
+            <div style="flex: 1; text-align: center; background: white; border-radius: 20px; padding: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <i class="fa-solid fa-trophy" style="font-size: 60px; color: #eab308; margin-bottom: 10px;"></i>
+                <div style="font-size: 64px; font-weight: bold; color: var(--accent); line-height: 1;" id="finalScore">0</div>
+                <p style="font-size: 16px; font-weight: bold; margin: 15px 0; min-height: 45px;" id="feedbackMessage">Menghitung hasil...</p>
+                <button class="btn btn-accent" onclick="announceScore()">Umumkan Skor! <i class="fa-solid fa-volume-high"></i></button>
+            </div>
+            <div style="flex: 1.5; display: flex; flex-direction: column;">
+                <p style="margin: 0 0 10px 0; font-weight: bold;"><i class="fa-solid fa-list-check"></i> Log Detail Jawaban:</p>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Subtest</th>
+                                <th>Nomor Soal</th>
+                                <th>Status</th>
+                                <th>Poin</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scoreTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
+            <button class="btn btn-primary" onclick="nextSlide(5)">Ke Halaman Refleksi <i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide5">
+        <div class="flex-center" style="text-align: center;">
+            <i class="fa-solid fa-heart" style="font-size: 70px; color: #ef4444; margin-bottom: 10px;"></i>
+            <h1 style="font-size: 55px; margin: 0;">Thank You For Today!</h1>
+            <p style="font-size: 20px; color: var(--primary); font-weight: bold; margin: 10px 0 30px 0;">"Practice makes perfect. Jangan pernah lelah belajar!"</p>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; text-align: left;">
+                <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); border-top: 5px solid var(--primary);">
+                    <h3 style="margin-top: 0;"><i class="fa-solid fa-lightbulb" style="color: var(--primary);"></i> Kesimpulan</h3>
+                    <p style="margin-bottom: 0; font-size: 15px; color: #475569;">Hari ini kita telah mengevaluasi pemahaman materi Greeting, Numbers, Colors, Objects in My House, serta Places & Transportation melalui 60 butir soal kuis interaktif.</p>
+                </div>
+                <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.03); border-top: 5px solid var(--accent);">
+                    <h3 style="margin-top: 0;"><i class="fa-solid fa-comments" style="color: var(--accent);"></i> Refleksi Mandiri</h3>
+                    <p style="margin-bottom: 0; font-size: 15px; color: #475569;">Gunakan papan skor untuk melihat subtest mana yang memerlukan pengulangan materi kembali. Tetap semangat mengasah kemampuan bahasamu!</p>
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="location.reload()" style="margin-top: 30px;"><i class="fa-solid fa-rotate-left"></i> Ulangi Kuis Dari Awal</button>
+        </div>
+    </div>
+
+    <script>
+        let studentName = "";
+        let currentTest = 0;
+        let qIndex = 0;
+        let selectedAnswer = null;
+        
+        const trackingResults = {};
+        const completedTests = new Set();
+
+        // Teks percakapan konstan untuk Test 5 agar selalu tampil di semua nomor soal 1-10
+        const longConversationText = `Johan: Good afternoon, Maria. Welcome to my house!
+Maria: Good afternoon, Johan. Wow, your house is so clean! I love the light blue paint on your front gate.
+Johan: Thank you! Come inside, let's sit in the living room. Look, I have a new aquarium here.
+Maria: Incredible! There are so many colorful fish. Look at that tiny one, its color is bright orange.
+Johan: Yes, that is a clownfish. By the way, how did you come here? Did you ride your bicycle?
+Maria: No, my bicycle tire is flat. So, I took a public bus to the central bus station, and then walked here.
+Johan: Oh I see. Tomorrow is Sunday, my father plans to buy a second clock for our kitchen. Do you want to join us to the market?
+Maria: Sure, I would love to! We can go there together at nine o'clock in the morning.
+Johan: Great! I will call you tomorrow. See you!`;
+
+        const allQuestions = {
+            1: [
+                { q: "Apa arti dari ungkapan 'Good Morning'?", a: ["Selamat Pagi", "Selamat Siang", "Selamat Sore", "Selamat Malam"], c: 0, d: "'Good morning' digunakan sebagai sapaan sejak dini hari hingga jam 12 siang." },
+                { q: "Jika seseorang berkata 'How are you?', maka jawaban yang tepat adalah...", a: ["I am nine years old", "I am fine, thank you", "My name is John", "Nice to meet you"], c: 1, d: "'How are you?' menanyakan kabar, dijawab dengan 'I am fine' (Saya baik-baik saja)." },
+                { q: "Apa bahasa Inggris dari bilangan cardinal '15'?", a: ["Fifth", "Fifty", "Fifteen", "Fiveth"], c: 2, d: "15 (cardinal number) adalah Fifteen. Fifty artinya 50." },
+                { q: "Urutan 'Kedua' dalam bahasa Inggris (ordinal number) ditulis sebagai...", a: ["Two", "Second", "Twice", "Secondary"], c: 1, d: "Ordinal number ke-2 adalah Second (2nd)." },
+                { q: "Warna yang dihasilkan jika mencampur 'Red' dan 'Yellow' adalah...", a: ["Green", "Purple", "Orange", "Brown"], c: 2, d: "Red (Merah) + Yellow (Kuning) = Orange (Jingga)." },
+                { q: "Benda di dalam rumah yang berfungsi untuk mendinginkan makanan/minuman adalah...", a: ["Sofa", "Refrigerator", "Wardrobe", "Stove"], c: 1, d: "Refrigerator artinya kulkas/lemari es." },
+                { q: "Di manakah biasanya kita menemukan benda 'Shower' and 'Soap'?", a: ["Kitchen", "Living room", "Bedroom", "Bathroom"], c: 3, d: "Shower (pancuran) dan Soap (sabun) berada di Bathroom (kamar mandi)." },
+                { q: "Tempat yang dituju saat ingin menaiki kendaraan pesawat terbang adalah...", a: ["Railway station", "Harbor", "Airport", "Bus station"], c: 2, d: "Airport berarti bandar udara." },
+                { q: "Kendaraan tradisional roda tiga yang digenjot atau bertenaga motor di Indonesia adalah...", a: ["Pedicab", "Bicycle", "Car", "Truck"], c: 0, d: "Pedicab adalah istilah bahasa Inggris untuk becak." },
+                { q: "What is the English word for 'Hijau'?", a: ["Blue", "Yellow", "Green", "Red"], c: 2, d: "Green artinya Hijau." },
+                { q: "Sebutkan angka ordinal untuk urutan kesatu!", a: ["One", "First", "Once", "Single"], c: 1, d: "Urutan kesatu ditulis First (1st)." },
+                { q: "Bahasa Inggris dari kata 'Ruang Tamu' adalah...", a: ["Bedroom", "Kitchen", "Living Room", "Dining Room"], c: 2, d: "Living Room = Ruang Tamu." },
+                { q: "Alat transportasi umum yang berjalan di atas rel baja dinamakan...", a: ["Bus", "Train", "Ship", "Subway"], c: 1, d: "Train artinya kereta api." },
+                { q: "Benda rumah tangga yang digunakan untuk alas tidur empuk dinamakan...", a: ["Pillow", "Mattress", "Blanket", "Bolster"], c: 1, d: "Mattress bermakna kasur/matras tempat tidur." },
+                { q: "Tempat di mana orang sakit pergi berobat menemui dokter disebut...", a: ["Market", "School", "Hospital", "Library"], c: 2, d: "Hospital artinya rumah sakit." },
+                { q: "Warna dari bendera negara Indonesia bagian atas adalah...", a: ["White", "Red", "Blue", "Black"], c: 1, d: "Bagian atas bendera Indonesia berwarna merah (Red)." },
+                { q: "Angka cardinal setelah dua puluh sembilan (29) adalah...", a: ["Twenty", "Thirty", "Thirteen", "Forty"], c: 1, d: "Setelah 29 adalah 30 (Thirty)." },
+                { q: "Ungkapan 'Goodbye' digunakan saat situasi...", a: ["Bertemu pertama kali", "Berpisah/berpamitan", "Meminta maaf", "Berterima kasih"], c: 1, d: "Goodbye diucapkan ketika hendak berpisah." },
+                { q: "Di manakah ibu biasanya meletakkan 'Frying pan' (wajan penggorengan)?", a: ["Garage", "Kitchen", "Bathroom", "Garden"], c: 1, d: "Peralatan masak diletakkan di Kitchen (dapur)." },
+                { q: "Kendaraan umum laut untuk menyeberangi selat antar pulau adalah...", a: ["Airplane", "Ferry Boat", "Train", "Bicycle"], c: 1, d: "Ferry Boat/Ship digunakan sebagai sarana transportasi laut." }
+            ],
+            2: [
+                { q: "Jika di pagi hari sebelum masuk kelas kamu berpapasan dengan gurumu, bagaimanakah cara menyapa yang tepat?", a: ["Good afternoon, Miss.", "Good morning, Miss.", "Good night, Miss.", "Good evening, Miss."], c: 1, d: "Sapaan pagi hari yang sopan adalah Good morning." },
+                { q: "Seseorang anak menjuarai kompetisi lari tepat di urutan paling depan. Posisi piala yang ia menangkan adalah juara...", a: ["1st position", "1 position", "One position", "1th position"], c: 0, d: "Peringkat pertama ditulis menggunakan ordinal number: 1st (First)." },
+                { q: "Ibumu membeli buah alpukat yang belum matang sepenuhnya, kulit luarnya berwarna apa?", a: ["Bright Red", "Dark Green", "Jet Black", "Snow White"], c: 1, d: "Kulit alpukat mentah umumnya berwarna hijau tua (Dark Green)." },
+                { q: "Kamu kedatangan tamu di rumah dan ingin mempersilakan duduk di sofa ruang tamu. Benda penunjang sofa tersebut adalah...", a: ["Stove", "Coffee table", "Wardrobe", "Toothbrush"], c: 1, d: "Di ruang tamu, pasangan sofa yang ideal untuk menaruh suguhan adalah Coffee table (meja kopi/meja tamu)." },
+                { q: "Jika kamu ingin pergi dari kota Jakarta menuju pulau Bali dengan waktu tempuh paling cepat, jenis transportasi apa yang kamu pilih?", a: ["Train", "Ship", "Car", "Airplane"], c: 3, d: "Pesawat terbang (Airplane) adalah opsi transportasi tercepat antar pulau." },
+                { q: "Saat jam dinding menunjukkan pukul 21.00 malam dan kamu bersiap-siap memejamkan mata untuk tidur, ucapan salam perpisahan malam hari yang tepat adalah...", a: ["Good afternoon", "Good evening", "Good night", "Good day"], c: 2, d: "Good night diucapkan secara khusus untuk perpisahan di malam hari atau sesaat menjelang tidur." },
+                { q: "Ada pengumuman pemenang lomba di papan pengumuman sekolah: 'Budi sits in the 3rd rank'. Apakah arti dari tingkatan posisi Budi?", a: ["Budi juara tiga", "Budi juara tiga belas", "Budi juara pertama", "Budi tidak juara"], c: 0, d: "3rd adalah kependekan dari Third yang berarti ketiga." },
+                { q: "Di garasi rumah ayah terdapat cairan oli bocor berceceran di lantai. Di manakah lokasi tepat ruangan tersebut berada?", a: ["Kitchen", "Garage", "Bedroom", "Dining room"], c: 1, d: "Kendaraan dan perlengkapan perkakas disimpan di dalam Garage (garasi)." },
+                { q: "Lampu lalu lintas di persimpangan jalan berganti menjadi warna merah menyala. Apa tindakan yang harus dilakukan oleh pengendara motor?", a: ["Speed up the vehicle", "Turn left directly", "Stop the vehicle", "Be careful and walk slow"], c: 2, d: "Warna merah (Red) pada traffic light menandakan kendaraan wajib berhenti (Stop)." },
+                { q: "Kamu ingin mengenalkan nama teman barumu bernama 'Rani' kepada ibumu di rumah. Kalimat pengantar awal perkenalan pihak ketiga yang benar adalah...", a: ["Mother, this is Rani.", "Mother, my name is Rani.", "How do you do Rani?", "I am fine, Rani."], c: 0, d: "Mengenalkan orang lain menggunakan ungkapan 'This is [Name]'." }
+            ],
+            3: [
+                { q: "Roni is a new student. He wants to ... himself to the class. 'Hello, my name is Roni.'", a: ["invite", "introduce", "ignore", "inspect"], c: 1, d: "Roni memperkenalkan dirinya (introduce)." },
+                { q: "Today is my sister's birthday. She is celebrating her ... (ke-17) sweet seventeen party.", a: ["seventeen", "seventeenth", "seventy", "seventieth"], c: 1, d: "Ulang tahun menggunakan bilangan urutan / ordinal number: seventeenth (17th)." },
+                { q: "The sky looks very clear today, it has a beautiful ... color.", a: ["black", "blue", "grey", "purple"], c: 1, d: "Langit cerah identik dengan warna biru (blue)." },
+                { q: "Every night, before I sleep, I always clear my bed and put my head on a soft ...", a: ["pillow", "mirror", "wardrobe", "sink"], c: 0, d: "Kepala bertumpu di atas bantal (pillow) saat tidur." },
+                { q: "My father drives a ... to work because it can fit all five family members inside comfortably.", a: ["motorcycle", "bicycle", "car", "scooter"], c: 2, d: "Kendaraan beroda empat yang muat seluruh keluarga adalah mobil (car)." },
+                { q: "Let's go to the ... to borrow some English storybooks.", a: ["hospital", "market", "library", "zoo"], c: 2, d: "Meminjam buku dilakukan di perpustakaan (library)." },
+                { q: "A: 'Goodbye, Andi! See you tomorrow!' | B: '..., Budi!'", a: ["Good morning", "Goodbye", "Thank you", "Hello"], c: 1, d: "Balasan ungkapan perpisahan goodbye adalah goodbye kembali." },
+                { q: "We need a ... to tell the current time so we won't be late for school.", a: ["calendar", "map", "clock", "mirror"], c: 2, d: "Penunjuk waktu jam adalah clock." },
+                { q: "Look at that plant! The leaves are fresh ...", a: ["yellow", "green", "red", "white"], c: 1, d: "Daun tanaman yang segar berwarna hijau (green)." },
+                { q: "Mother cooks dynamic dishes like fried rice and soup in the ...", a: ["bathroom", "garage", "kitchen", "living room"], c: 2, d: "Memasak makanan dilakukan di dapur (kitchen)." },
+                { q: "The train stops completely at the ... to drop off thousands of passengers.", a: ["harbor", "station", "airport", "bus stop"], c: 1, d: "Kereta api berhenti reguler di stasiun (station)." },
+                { q: "This is the ... (ke-3) time I visited Bali. I still love it so much.", a: ["three", "third", "triple", "thirdly"], c: 1, d: "Urutan kesekian kali dinyatakan dengan ordinal number: third (ke-3)." },
+                { q: "My brother washes his face in front of the bathroom ... to see his reflection.", a: ["mirror", "toilet", "towel", "bathtub"], c: 0, d: "Melihat pantulan bayangan menggunakan cermin (mirror)." },
+                { q: "A: 'Thank you for helping me clear the table.' | B: 'You are ...'", a: ["welcome", "fine", "good", "sorry"], c: 0, d: "Balasan terima kasih adalah 'You are welcome'." },
+                { q: "Students must not cross the street carelessly. They should cross via the zebra crossing near the ...", a: ["bus stop", "traffic light", "gas station", "railway"], c: 1, d: "Penyeberangan jalan aman biasanya berada dekat lampu lalu lintas (traffic light)." }
+            ],
+            4: [
+                { nar: "Narasi 1: Sinta lives in a sweet suburban house. The outer walls are colored light yellow. Inside her living room, there is a large brown wooden table surrounded by four matching wooden chairs.", q: "What color are the outer walls of Sinta's house?", a: ["Brown", "Light Yellow", "Green", "White"], c: 1, d: "Disebutkan secara eksplisit pada teks: 'walls are colored light yellow'." },
+                { nar: "Narasi 2: Every Monday morning, Mr. Gunawan goes to the city hall. He prefers public transportation, so he hops on a blue city bus at 06.30 AM to avoid heavy traffic congestion.", q: "What kind of transportation does Mr. Gunawan use on Mondays?", a: ["Personal Car", "City Bus", "Train", "Motorcycle"], c: 1, d: "Teks menyebutkan: 'he hops on a blue city bus'." },
+                { nar: "Narasi 3: Denny gets a special gift for his 12th birthday. It is a brand new mountain bicycle. The bicycle frame is painted bright red with cool jet black stripes on both tires.", q: "What object did Denny receive as his birthday present?", a: ["A mountain bicycle", "A toy car", "A new smartphone", "A school bag"], c: 0, d: "Teks menjelaskan kado tersebut: 'It is a brand new mountain bicycle'." },
+                { nar: "Narasi 4: In our school yard, there are three main dustbins arranged neatly. The red dustbin is for plastic, the green dustbin is for organic leaves, and the yellow one is for paper waste.", q: "What is the green dustbin specifically used for?", a: ["Plastic waste", "Organic leaves", "Paper waste", "Glass bottles"], c: 1, d: "Sesuai isi bacaan teks: 'the green dustbin is for organic leaves'." },
+                { nar: "Narasi 5: Diana is introducing her cousin to her classmates. 'Good afternoon friends, please meet my cousin. His name is Leo. He just moved here from Surabaya last weekend.'", q: "What time of the day does this introduction scene probably take place?", a: ["In the morning", "In the afternoon", "At late night", "Early dawn"], c: 1, d: "Kalimat pertama sapaannya adalah: 'Good afternoon friends' (Selamat siang/sore)." }
+            ],
+            5: [
+                { q: "Where does this conversation take place?", a: ["At Maria's house", "At Johan's house", "At the bus station", "At the traditional market"], c: 1, d: "Johan berkata: 'Welcome to my house!' di awal percakapan." },
+                { q: "What color is the front gate of Johan's house?", a: ["Light Blue", "Bright Orange", "Brown", "White"], c: 0, d: "Maria memuji: 'I love the light blue paint on your front gate'." },
+                { q: "Where do they sit to continue their conversation inside?", a: ["In the kitchen", "In the bedroom", "In the living room", "In the backyard garden"], c: 2, d: "Johan mengajak: 'let's sit in the living room'." },
+                { q: "What object inside the living room has colorful items?", a: ["A wardrobe", "An aquarium", "A bookshelf", "A refrigerator"], c: 1, d: "Johan berkata 'I have a new aquarium here' yang berisi ikan hias warna-warni." },
+                { q: "What is the color of the tiny clownfish in the aquarium?", a: ["Light blue", "Bright orange", "Dark green", "Yellow"], c: 1, d: "Maria mendeskripsikan: 'Look at that tiny one, its color is bright orange'." },
+                { q: "Why did Maria NOT ride her bicycle to Johan's house?", a: ["Because she lost her keys", "Because her bicycle tire is flat", "Because she doesn't like cycling", "Because it was raining heavily"], c: 1, d: "Maria memberi tahu alasan: 'No, my bicycle tire is flat'." },
+                { q: "What vehicle did Maria use to reach the central station?", a: ["A taxicab", "A public bus", "A commuter train", "A motorcycle"], c: 1, d: "Maria menjelaskan: 'So, I took a public bus to the central bus station'." },
+                { q: "What item does Johan's father want to purchase for the kitchen?", a: ["A new refrigerator", "A cooking stove", "A second clock", "A wooden dining table"], c: 2, d: "Johan berkata: 'my father plans to buy a second clock for our kitchen'." },
+                { q: "At what time do they plan to go to the market on Sunday?", a: ["At 07.00 AM", "At 09.00 AM", "At 12.00 PM", "At 03.00 PM"], c: 1, d: "Maria mengusulkan waktu: 'We can go there together at nine o'clock in the morning'." },
+                { q: "What day of the week will they go to the market together?", a: ["Saturday", "Monday", "Friday", "Sunday"], c: 3, d: "Johan menyebutkan: 'Tomorrow is Sunday...'" }
+            ]
+        };
+
+        function startPresentation() {
+            const inputField = document.getElementById('studentName');
+            const inputName = inputField ? inputField.value.trim() : "";
+            
+            if(!inputName) {
+                alert("Silakan masukkan nama siswa terlebih dahulu sebelum memulai kuis!");
+                return;
+            }
+            studentName = inputName;
+            nextSlide(2);
+        }
+
+        function nextSlide(id) {
+            document.querySelectorAll('.slide-container').forEach(s => s.classList.remove('active'));
+            const targetSlide = document.getElementById('slide' + id);
+            if(targetSlide) {
+                targetSlide.classList.add('active');
+            }
+            if(id === 4) buildResultsTable();
+        }
+
+        function startTest(num) {
+            currentTest = num;
+            qIndex = 0;
+            document.getElementById('testMenuArea').style.display = 'none';
+            document.getElementById('quizEngine').style.display = 'flex';
+            
+            const titles = {
+                1: "Test 1: Kosa Kata Umum (Materi 1-5)",
+                2: "Test 2: Permasalahan & Situasi Kontekstual",
+                3: "Test 3: Melengkapi Kalimat Rumpang",
+                4: "Test 4: Membaca Pemahaman Teks Narasi Pendek",
+                5: "Test 5: Analisis Teks Percakapan Panjang (Soal 1-10)"
+            };
+            document.getElementById('currentTestTitle').innerText = titles[num];
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const qData = allQuestions[currentTest][qIndex];
+            document.getElementById('questionProgress').innerText = `Soal: ${qIndex + 1} / ${allQuestions[currentTest].length}`;
+            document.getElementById('questionText').innerText = qData.q;
+            
+            const grid = document.getElementById('optionsGrid');
+            grid.innerHTML = '';
+            selectedAnswer = null;
+            
+            document.getElementById('feedbackBox').style.display = 'none';
+            document.getElementById('discussBtn').disabled = true;
+            document.getElementById('nextQuestBtn').style.display = 'none';
+            document.getElementById('finishTestBtn').style.display = 'none';
+            document.getElementById('checkBtn').style.display = 'inline-block';
+
+            const navBox = document.getElementById('narrativeBox');
+            
+            // Logika baru untuk Test 5 agar selalu memunculkan teks percakapan di soal 1-10
+            if (currentTest === 5) {
+                navBox.style.display = 'block';
+                navBox.innerText = longConversationText;
+            } else if (qData.nar) {
+                navBox.style.display = 'block';
+                navBox.innerText = qData.nar;
+            } else {
+                navBox.style.display = 'none';
+            }
+
+            qData.a.forEach((opt, idx) => {
+                const b = document.createElement('div');
+                b.className = 'option-btn';
+                b.innerText = String.fromCharCode(65 + idx) + ". " + opt;
+                b.onclick = () => {
+                    document.querySelectorAll('.option-btn').forEach(el => el.classList.remove('selected'));
+                    b.classList.add('selected');
+                    selectedAnswer = idx;
+                };
+                grid.appendChild(b);
+            });
+        }
+
+        function checkCurrentAnswer() {
+            if(selectedAnswer === null) {
+                alert("Silakan pilih salah satu opsi jawaban terlebih dahulu!");
+                return;
+            }
+            
+            const qData = allQuestions[currentTest][qIndex];
+            const isCorrect = selectedAnswer === qData.c;
+            const pointsGained = (currentTest === 1) ? 1 : 2;
+            
+            if (!trackingResults[currentTest]) {
+                trackingResults[currentTest] = {};
+            }
+            
+            trackingResults[currentTest][qIndex + 1] = {
+                correct: isCorrect,
+                score: isCorrect ? pointsGained : 0
+            };
+
+            document.getElementById('checkBtn').style.display = 'none';
+            document.getElementById('discussBtn').disabled = false;
+            document.getElementById('discussionText').innerText = qData.d;
+            
+            const optionsElements = document.querySelectorAll('.option-btn');
+            optionsElements.forEach((el, idx) => {
+                if (idx === qData.c) {
+                    el.style.backgroundColor = '#dcfd8b';
+                    el.style.borderColor = '#10b981';
+                } else if (idx === selectedAnswer && !isCorrect) {
+                    el.style.backgroundColor = '#fecaca';
+                    el.style.borderColor = '#ef4444';
+                }
+            });
+
+            if(qIndex < allQuestions[currentTest].length - 1) {
+                document.getElementById('nextQuestBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('finishTestBtn').style.display = 'inline-block';
+            }
+        }
+
+        function toggleDiscussion() {
+            const fb = document.getElementById('feedbackBox');
+            fb.style.display = fb.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function nextQuestion() {
+            qIndex++;
+            loadQuestion();
+        }
+
+        function finishTest() {
+            completedTests.add(currentTest);
+            
+            const currentMenuBtn = document.getElementById('menuBtn' + currentTest);
+            if(currentMenuBtn) {
+                currentMenuBtn.style.backgroundColor = '#cbd5e1';
+                currentMenuBtn.style.color = '#64748b';
+                currentMenuBtn.innerHTML += ` <i class="fa-solid fa-circle-check" style="color: #10b981;"></i>`;
+                currentMenuBtn.disabled = true;
+            }
+
+            document.getElementById('testMenuArea').style.display = 'block';
+            document.getElementById('quizEngine').style.display = 'none';
+            
+            if(completedTests.size === 5) {
+                document.getElementById('actionToScore').style.display = 'block';
+            }
+        }
+
+        function buildResultsTable() {
+            const tbody = document.getElementById('scoreTableBody');
+            tbody.innerHTML = '';
+            let calculatedTotal = 0;
+            
+            for(let t = 1; t <= 5; t++) {
+                const totalQuestionsInSubtest = allQuestions[t].length;
+                for(let q = 1; q <= totalQuestionsInSubtest; q++) {
+                    const rowData = trackingResults[t] && trackingResults[t][q] ? trackingResults[t][q] : { correct: false, score: 0 };
+                    
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>Subtest ${t}</strong></td>
+                        <td>Soal #${q}</td>
+                        <td style="color: ${rowData.correct ? '#16a34a' : '#dc2626'}; font-weight: bold;">
+                            ${rowData.correct ? '<i class="fa-solid fa-check"></i> Benar' : '<i class="fa-solid fa-xmark"></i> Salah'}
+                        </td>
+                        <td><strong>${rowData.score}</strong></td>
+                    `;
+                    tbody.appendChild(tr);
+                    calculatedTotal += rowData.score;
+                }
+            }
+            
+            document.getElementById('finalScore').innerText = calculatedTotal;
+            
+            let messageText = "";
+            if(calculatedTotal >= 100) {
+                messageText = `Excellent ${studentName}, kamu mendapatkan score sempurna!`;
+            } else if(calculatedTotal >= 90) {
+                messageText = `Mantap sedikit lagi sempurna ${studentName}!`;
+            } else if(calculatedTotal >= 75) {
+                messageText = `Good job ${studentName}!`;
+            } else {
+                messageText = `Kita harus belajar lagi ${studentName}.`;
+            }
+            
+            document.getElementById('feedbackMessage').innerText = messageText;
+        }
+
+        function announceScore() {
+            const textToSpeak = document.getElementById('feedbackMessage').innerText;
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
+                utterance.lang = 'id-ID';
+                utterance.rate = 1.0;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Browser Anda tidak mendukung fitur pembaca suara (Text-to-Speech). Hasil teks: " + textToSpeak);
+            }
+        }
+    </script>
+</body>
+</html>
