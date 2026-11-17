@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Grammar Master - Latihan Interaktif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #f4ede1;
+    --bg-warm: #ede2cd;
+    --ink: #1a2e2a;
+    --ink-soft: #3d4a47;
+    --paper: #fbf7ee;
+    --teal: #0f6e6a;
+    --teal-dark: #0a4d49;
+    --teal-light: #c7e6e2;
+    --coral: #e8553a;
+    --coral-soft: #f8c4b5;
+    --amber: #e8a13a;
+    --green: #2d7a4f;
+    --green-soft: #c5e4d2;
+    --red: #c2410c;
+    --red-soft: #f5d3c4;
+    --purple: #6b21a8;
+    --blue: #1d4ed8;
+    --border: #d8cdb5;
+    --shadow: 0 12px 40px -12px rgba(15, 110, 106, 0.25);
+    --shadow-lg: 0 24px 60px -16px rgba(15, 110, 106, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .bg-decor { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: float 18s ease-in-out infinite; }
+  .blob-1 { width: 500px; height: 500px; background: var(--teal); top: -150px; left: -100px; }
+  .blob-2 { width: 400px; height: 400px; background: var(--coral); top: 30%; right: -120px; animation-delay: -6s; }
+  .blob-3 { width: 450px; height: 450px; background: var(--amber); bottom: -150px; left: 20%; animation-delay: -12s; }
+  @keyframes float { 0%, 100% { transform: translate(0,0) scale(1); } 33% { transform: translate(40px,-30px) scale(1.05); } 66% { transform: translate(-30px,40px) scale(0.95); } }
+
+  .app { position: relative; z-index: 1; }
+
+  .page { display: none; min-height: 100vh; padding: 32px 24px 80px; animation: fadeIn 0.6s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ============================ COVER ============================ */
+  .cover { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 40px 24px; }
+  .cover-card { max-width: 1100px; width: 100%; background: linear-gradient(135deg, var(--paper) 0%, var(--bg-warm) 100%); border-radius: 32px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); overflow: hidden; display: grid; grid-template-columns: 1.1fr 1fr; position: relative; }
+  .cover-left { padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--teal-light); color: var(--teal-dark); padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 600; width: fit-content; letter-spacing: 0.5px; text-transform: uppercase; }
+  .cover-title { font-family: 'Fraunces', serif; font-weight: 900; font-size: clamp(48px, 6vw, 84px); line-height: 0.95; color: var(--ink); margin: 24px 0 16px; letter-spacing: -0.03em; }
+  .cover-title .accent { color: var(--coral); font-style: italic; font-weight: 400; }
+  .cover-sub { font-size: 17px; color: var(--ink-soft); max-width: 460px; margin-bottom: 28px; }
+  .topics-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+  .topic-chip { background: var(--paper); border: 1px solid var(--border); padding: 8px 14px; border-radius: 12px; font-size: 12px; font-weight: 600; color: var(--teal-dark); display: flex; align-items: center; gap: 6px; transition: all 0.3s; }
+  .topic-chip:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: var(--teal); }
+  .name-form { margin-top: 8px; }
+  .form-label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px; display: block; }
+  .input-wrap { position: relative; display: flex; align-items: center; }
+  .input-wrap i { position: absolute; left: 18px; color: var(--teal); font-size: 18px; }
+  .name-input { width: 100%; padding: 18px 18px 18px 52px; font-family: inherit; font-size: 17px; font-weight: 500; color: var(--ink); background: var(--paper); border: 2px solid var(--border); border-radius: 16px; transition: all 0.3s; }
+  .name-input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 4px var(--teal-light); }
+  .start-btn { margin-top: 28px; background: var(--ink); color: var(--paper); border: none; padding: 20px 32px; border-radius: 16px; font-family: inherit; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: space-between; width: 100%; transition: all 0.3s; }
+  .start-btn:hover:not(:disabled) { transform: translateY(-2px); background: var(--coral); }
+  .start-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .cover-right { background: linear-gradient(160deg, var(--teal-dark) 0%, var(--teal) 70%, #0d8a85 100%); padding: 60px 50px; color: var(--paper); display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
+  .cover-right::before { content: ''; position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(232,85,58,0.4), transparent 70%); top: -100px; right: -100px; border-radius: 50%; }
+  .cover-right::after { content: ''; position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(232,161,58,0.3), transparent 70%); bottom: -80px; left: -80px; border-radius: 50%; }
+  .cover-illu { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .quote-mark { font-family: 'Fraunces', serif; font-size: 140px; line-height: 0.7; opacity: 0.3; color: var(--coral); }
+  .cover-quote { font-family: 'Fraunces', serif; font-style: italic; font-size: 26px; line-height: 1.3; margin: 16px 0; position: relative; z-index: 2; }
+  .cover-quote-author { font-size: 13px; opacity: 0.7; text-transform: uppercase; letter-spacing: 2px; margin-top: 16px; position: relative; z-index: 2; }
+  .stat-row { display: flex; gap: 24px; margin-bottom: 40px; position: relative; z-index: 2; }
+  .stat { flex: 1; }
+  .stat-num { font-family: 'Fraunces', serif; font-weight: 800; font-size: 44px; line-height: 1; color: var(--paper); }
+  .stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.8; margin-top: 6px; }
+
+  /* ============================ GENERAL UI ============================ */
+  .container { max-width: 1180px; margin: 0 auto; }
+  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; flex-wrap: wrap; gap: 16px; position: sticky; top: 0; background: var(--bg); padding: 16px 0; z-index: 50; }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .back-btn { background: var(--paper); border: 1px solid var(--border); width: 44px; height: 44px; border-radius: 12px; cursor: pointer; color: var(--teal-dark); font-size: 16px; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+  .back-btn:hover { background: var(--teal); color: var(--paper); transform: translateX(-3px); }
+  .user-pill { display: flex; align-items: center; gap: 12px; background: var(--paper); border: 1px solid var(--border); padding: 8px 18px 8px 8px; border-radius: 100px; }
+  .avatar { width: 32px; height: 32px; background: linear-gradient(135deg, var(--coral), var(--amber)); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--paper); font-weight: 700; font-size: 14px; }
+  .user-pill .name { font-weight: 600; font-size: 14px; }
+
+  .page-title { font-family: 'Fraunces', serif; font-weight: 800; font-size: clamp(38px, 5vw, 64px); line-height: 1; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .page-title .accent { color: var(--coral); font-style: italic; font-weight: 400; }
+  .page-sub { color: var(--ink-soft); font-size: 17px; max-width: 680px; margin-bottom: 40px; }
+
+  /* ============================ MATERIALS ============================ */
+  .material-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 40px; }
+  .material-card { background: var(--paper); border-radius: 24px; padding: 28px; border: 1px solid var(--border); transition: all 0.4s; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+  .material-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--accent-color); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
+  .material-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: var(--accent-color); }
+  .material-card:hover::before { transform: scaleX(1); }
+  .material-card.teal { --accent-color: var(--teal); }
+  .material-card.coral { --accent-color: var(--coral); }
+  .material-card.amber { --accent-color: var(--amber); }
+  .material-card.green { --accent-color: var(--green); }
+  .material-card.red { --accent-color: var(--red); }
+  .material-card.purple { --accent-color: var(--purple); }
+  .material-card.blue { --accent-color: var(--blue); }
+  .mat-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--accent-color); color: var(--paper); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 16px; }
+  .mat-title { font-family: 'Fraunces', serif; font-weight: 800; font-size: 22px; margin-bottom: 12px; }
+  .mat-desc { font-size: 13px; color: var(--ink-soft); margin-bottom: 16px; }
+  .form-row { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; background: var(--bg-warm); border-radius: 12px; margin-bottom: 8px; border-left: 3px solid var(--accent-color); }
+  .form-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--ink-soft); font-weight: 700; }
+  .form-text { font-size: 14px; color: var(--ink); font-weight: 600; }
+  .form-text code { background: var(--paper); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; color: var(--accent-color); font-size: 12px; }
+  .mat-vocab { margin-top: auto; padding-top: 14px; border-top: 1px dashed var(--border); }
+  .mat-vocab-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-color); font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .vocab-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .vocab-item { background: var(--bg-warm); padding: 6px 10px; border-radius: 8px; font-size: 12px; display: flex; justify-content: space-between; gap: 4px; line-height: 1.4; }
+  .vocab-item strong { color: var(--teal-dark); font-weight: 700; }
+  .vocab-item.full { grid-column: 1 / -1; }
+
+  /* ============================ QUESTIONS ============================ */
+  .q-nav-bar { display: flex; gap: 5px; flex-wrap: wrap; background: var(--paper); padding: 14px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 24px; position: sticky; top: 80px; z-index: 40; box-shadow: var(--shadow); }
+  .q-nav-item { width: 32px; height: 32px; border-radius: 8px; background: var(--bg-warm); color: var(--ink-soft); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid transparent; transition: all 0.2s; }
+  .q-nav-item:hover { border-color: var(--teal); color: var(--teal); }
+  .q-nav-item.correct { background: var(--green); color: var(--paper); }
+  .q-nav-item.wrong { background: var(--coral); color: var(--paper); }
+
+  .section-title { font-family: 'Fraunces', serif; font-size: 26px; margin: 40px 0 8px; display: flex; align-items: center; gap: 10px; }
+  .section-title .pill { background: var(--coral); color: var(--paper); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 12px; font-weight: 800; padding: 4px 14px; border-radius: 100px; text-transform: uppercase; letter-spacing: 1px; }
+  .section-title .pill.green { background: var(--green); }
+  .section-desc { color: var(--ink-soft); font-size: 14px; margin-bottom: 20px; }
+
+  .question-block { background: var(--paper); border-radius: 18px; padding: 22px 24px; border: 1px solid var(--border); margin-bottom: 16px; transition: all 0.3s; }
+  .question-block.correct { border-color: var(--green); background: linear-gradient(135deg, var(--paper), var(--green-soft)); }
+  .question-block.wrong { border-color: var(--coral); background: linear-gradient(135deg, var(--paper), var(--red-soft)); }
+
+  .q-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .q-num { background: var(--teal-dark); color: var(--paper); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0; }
+  .question-block.correct .q-num { background: var(--green); }
+  .question-block.wrong .q-num { background: var(--coral); }
+  .q-text { font-size: 16px; font-weight: 500; color: var(--ink); flex: 1; }
+  .q-text .blank { display: inline-block; width: 70px; border-bottom: 2px solid var(--ink-soft); margin: 0 4px; }
+  .q-status { font-size: 13px; font-weight: 700; display: none; align-items: center; gap: 6px; }
+  .question-block.correct .q-status { display: flex; color: var(--green); }
+  .question-block.wrong .q-status { display: flex; color: var(--coral); }
+
+  .answer-area { min-height: 56px; background: #fff; border: 2px dashed var(--border); border-radius: 12px; padding: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 16px; transition: all 0.3s; }
+  .question-block.correct .answer-area { border-color: var(--green); background: #f0fff5; }
+  .question-block.wrong .answer-area { border-color: var(--coral); background: #fff5f2; }
+  .placeholder { color: var(--ink-soft); opacity: 0.5; font-size: 14px; font-style: italic; padding: 0 8px; }
+
+  .word-tile { padding: 9px 15px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; border: none; transition: all 0.2s; font-family: inherit; color: var(--paper); }
+  .answer-tile { background: var(--teal); color: var(--paper); }
+  .answer-tile:hover { background: var(--teal-dark); transform: scale(0.95); }
+  .question-block.correct .answer-tile { background: var(--green); }
+  .question-block.wrong .answer-tile { background: var(--coral); }
+
+  .word-bank { display: flex; flex-wrap: wrap; gap: 8px; padding: 12px; background: var(--bg-warm); border-radius: 12px; margin-bottom: 16px; }
+  .bank-tile { background: var(--paper); color: var(--teal-dark); border: 1px solid var(--teal); }
+  .bank-tile:hover:not(.used) { background: var(--teal-light); transform: translateY(-1px); }
+  .bank-tile.used { opacity: 0.3; cursor: not-allowed; background: var(--border); color: var(--ink-soft); border-color: var(--border); }
+
+  .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .option { padding: 12px 16px; border: 2px solid var(--border); background: var(--bg-warm); border-radius: 12px; cursor: pointer; font-family: inherit; font-size: 14px; color: var(--ink); text-align: left; display: flex; align-items: center; gap: 12px; transition: all 0.2s; }
+  .option:hover:not(.disabled) { border-color: var(--teal); background: var(--paper); }
+  .option-letter { width: 28px; height: 28px; background: var(--paper); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 12px; color: var(--teal-dark); flex-shrink: 0; transition: all 0.2s; }
+  .option.selected { background: var(--teal); border-color: var(--teal-dark); color: var(--paper); }
+  .option.selected .option-letter { background: var(--paper); color: var(--teal-dark); }
+  .option.correct-answer { background: var(--green-soft); border-color: var(--green); color: var(--green); font-weight: 600; }
+  .option.correct-answer .option-letter { background: var(--green); color: var(--paper); }
+  .option.wrong-answer { background: var(--red-soft); border-color: var(--coral); color: var(--red); }
+  .option.wrong-answer .option-letter { background: var(--coral); color: var(--paper); }
+  .option.disabled { cursor: default; }
+
+  .q-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { padding: 10px 16px; border-radius: 10px; font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.3s; }
+  .btn-primary { background: var(--teal); color: var(--paper); }
+  .btn-primary:hover { background: var(--teal-dark); }
+  .btn-secondary { background: var(--paper); color: var(--ink); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-ghost { background: transparent; color: var(--ink-soft); }
+  .btn-ghost:hover { color: var(--coral); }
+  .btn-coral { background: var(--coral); color: var(--paper); }
+  .btn-coral:hover { background: #c2410c; }
+
+  .explanation-box { margin-top: 16px; padding: 14px; background: linear-gradient(135deg, #fff8e8, #ffefc7); border-left: 4px solid var(--amber); border-radius: 10px; font-size: 13px; color: var(--ink-soft); line-height: 1.7; display: none; }
+  .explanation-box.show { display: block; animation: slideDown 0.4s ease; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ============================ FINISH BAR ============================ */
+  .finish-bar { position: fixed; bottom: 24px; right: 24px; z-index: 100; display: flex; gap: 12px; align-items: center; background: var(--ink); padding: 12px 20px; border-radius: 100px; box-shadow: var(--shadow-lg); }
+  .progress-stat { color: var(--paper); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .progress-bar { width: 100px; height: 6px; background: rgba(255,255,255,0.2); border-radius: 100px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--amber); width: 0; transition: width 0.4s; border-radius: 100px; }
+
+  /* ============================ RESULT ============================ */
+  .result-container { max-width: 800px; margin: 40px auto; text-align: center; background: var(--paper); padding: 50px; border-radius: 24px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); position: relative; overflow: hidden; }
+  .result-container::before { content: ''; position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(232,85,58,0.2), transparent 70%); top: -100px; right: -50px; border-radius: 50%; }
+  .result-trophy { font-size: 64px; color: var(--amber); margin-bottom: 16px; }
+  .result-title { font-family: 'Fraunces', serif; font-weight: 800; font-size: 40px; margin-bottom: 8px; }
+  .thank-you { font-size: 18px; color: var(--ink-soft); margin-bottom: 32px; }
+  .score-circle { width: 160px; height: 160px; border: 8px solid var(--bg-warm); border-radius: 50%; margin: 0 auto 32px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--paper); position: relative; }
+  .score-circle::before { content: ''; position: absolute; inset: -8px; border: 8px solid var(--teal); border-radius: 50%; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  .score-num { font-family: 'Fraunces', serif; font-weight: 900; font-size: 56px; line-height: 1; color: var(--teal); }
+  .score-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--ink-soft); }
+  .stats-row { display: flex; justify-content: center; gap: 32px; margin-bottom: 32px; flex-wrap: wrap; }
+  .stat-box { background: var(--bg-warm); padding: 16px 24px; border-radius: 16px; min-width: 120px; }
+  .stat-box .stat-num { font-family: 'Fraunces', serif; font-weight: 800; font-size: 32px; color: var(--ink); }
+  .stat-box .stat-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--ink-soft); }
+  .reflection-box { background: var(--bg-warm); padding: 24px; border-radius: 16px; text-align: left; margin-bottom: 32px; border-left: 4px solid var(--amber); }
+  .reflection-box h3 { font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+  @media (max-width: 900px) {
+    .cover-card { grid-template-columns: 1fr; }
+    .cover-right { padding: 40px 30px; }
+    .cover-left { padding: 40px 30px; }
+    .topbar { position: relative; top: 0; }
+    .vocab-list { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .page { padding: 20px 16px 60px; }
+    .q-nav-bar { display: none; }
+    .finish-bar { left: 16px; right: 16px; bottom: 16px; justify-content: center; }
+    .result-container { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<div class="app">
+
+  <!-- ============================ COVER PAGE ============================ -->
+  <section class="page active" id="cover-page">
+    <div class="cover">
+      <div class="cover-card">
+        <div class="cover-left">
+          <span class="badge"><i class="fas fa-language"></i> Interactive English Practice</span>
+          <h1 class="cover-title">English<br>Grammar <span class="accent">Master</span></h1>
+          <p class="cover-sub">Latihan interaktif mengubah kalimat Bahasa Indonesia ke Bahasa Inggris. Mencakup 7 materi lengkap dengan penyusunan kalimat dan melengkapi kata.</p>
+
+          <div class="topics-row">
+            <span class="topic-chip"><i class="fas fa-rocket" style="color:var(--teal)"></i> Simple Future</span>
+            <span class="topic-chip"><i class="fas fa-hands-helping" style="color:var(--coral)"></i> Offering Help</span>
+            <span class="topic-chip"><i class="fas fa-hand-point-right" style="color:var(--amber)"></i> This/That</span>
+            <span class="topic-chip"><i class="fas fa-balance-scale" style="color:var(--green)"></i> Both/Either/Neither</span>
+            <span class="topic-chip"><i class="fas fa-layer-group" style="color:var(--red)"></i> The Others</span>
+            <span class="topic-chip"><i class="fas fa-arrow-up" style="color:var(--purple)"></i> Comparative</span>
+            <span class="topic-chip"><i class="fas fa-thumbs-up" style="color:var(--blue)"></i> Should/Shouldn't</span>
+          </div>
+
+          <form class="name-form" id="nameForm">
+            <label class="form-label" for="studentName">Nama Siswa</label>
+            <div class="input-wrap">
+              <i class="fas fa-user"></i>
+              <input type="text" id="studentName" class="name-input" placeholder="Tulis nama lengkap kamu di sini..." autocomplete="off" required>
+            </div>
+            <button type="submit" class="start-btn" id="startBtn" disabled>
+              <span>Mulai Belajar Sekarang</span>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </form>
+        </div>
+
+        <div class="cover-right">
+          <div class="cover-illu">
+            <div class="quote-mark">"</div>
+            <p class="cover-quote">The limits of my language mean the limits of my world.</p>
+            <p class="cover-quote-author">— Ludwig Wittgenstein</p>
+          </div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="stat-num">7</div>
+              <div class="stat-label">Materi</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">40</div>
+              <div class="stat-label">Total Soal</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">2</div>
+              <div class="stat-label">Bagian Tes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ MATERIAL PAGE ============================ -->
+  <section class="page" id="material-page">
+    <div class="container">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="back-btn" onclick="goToPage('cover-page')" aria-label="Kembali"><i class="fas fa-arrow-left"></i></button>
+          <div class="user-pill">
+            <div class="avatar" id="avatarMat">A</div>
+            <div class="name" id="userNameMat">Siswa</div>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="goToPage('exercise-page')">
+          <i class="fas fa-pencil-ruler"></i> Lanjut ke Latihan
+        </button>
+      </div>
+
+      <h2 class="page-title">Materi & <span class="accent">Kosakata</span></h2>
+      <p class="page-sub">Pelajari 7 materi berikut beserta kosakata dan ungkapan pentingnya sebelum mengerjakan latihan soal.</p>
+
+      <div class="material-grid">
+
+        <div class="material-card teal">
+          <div class="mat-icon"><i class="fas fa-rocket"></i></div>
+          <h3 class="mat-title">Simple Future Tense</h3>
+          <p class="mat-desc">Digunakan untuk menyatakan kegiatan yang akan terjadi di masa depan.</p>
+          <div class="form-row"><span class="form-label">Positif (+)</span><span class="form-text"><code>S + will + V1 + O</code></span></div>
+          <div class="form-row"><span class="form-label">Negatif (-)</span><span class="form-text"><code>S + will + not + V1</code></span></div>
+          <div class="form-row"><span class="form-label">Tanya (?)</span><span class="form-text"><code>Will + S + V1?</code></span></div>
+          <div class="mat-vocab">
+            <div class="mat-vocab-label"><i class="fas fa-book"></i> Kosakata</div>
+            <div class="vocab-list">
+              <div class="vocab-item"><span>will</span><strong>akan</strong></div>
+              <div class="vocab-item"><span>tomorrow</span><strong>besok</strong></div>
+              <div class="vocab-item"><span>next week</span><strong>minggu depan</strong></div>
+              <div class="vocab-item"><span>soon</span><strong>segera</strong></div>
+              <div class="vocab-item"><span>later</span><strong>nanti</strong></div>
+              <div class="vocab-item"><span>tonight</span><strong>malam ini</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="material-card coral">
+          <div class="mat-icon"><i class="fas fa-hands-helping"></i></div>
+          <h3 class="mat-title">Offering Help</h3>
+          <p class="mat-desc">Ungkapan untuk menawarkan bantuan kepada orang lain dengan sopan.</p>
+          <div class="form-row"><span class="form-label">Menawarkan</span><span class="form-text"><code>Can I help you? / May I help you?</code></span></div>
+          <div class="form-row"><span class="form-label">Menawarkan</span><span class="form-text"><code>Would you like me to + V1?</code></span></div>
+          <div class="form-row"><span class="form-label">Menerima</span><span class="form-text"><code>Yes, please. / That's very kind of you.</code></span></div>
+          <div class="form-row"><span class="form-label">Menolak</span><span class="form-text"><code>No, thank you. / No, thanks.</code></span></div>
+          <div class="mat-vocab">
+            <div class="mat-vocab-label"><i class="fas fa-book"></i> Kosakata</div>
+            <div class="vocab-list">
+              <div class="vocab-item"><span>Can I help you?</span><strong>Boleh saya bantu?</strong></div>
+              <div class="vocab-item"><span>Let me help you</span><strong>Biar saya bantu</strong></div>
+              <div class="vocab-item"><span>carry</span><strong>membawa/mengangkat</strong></div>
+              <div class="vocab-item"><span>need help</span><strong>butuh bantuan</strong></div>
+              <div class="vocab-item"><span>Yes, please</span><strong>Ya, silakan</strong></div>
+              <div class="vocab-item"><span>No, thanks</span><strong>Tidak, terima kasih</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="material-card amber">
+          <div class="mat-icon"><i class="fas fa-hand-point-right"></i></div>
+          <h3 class="mat-title">Kata Ganti Tunjuk</h3>
+          <p class="mat-desc">Demonstratives untuk menunjuk benda dekat atau jauh, tunggal atau jamak.</p>
+          <div class="form-row"><span class="form-label">Dekat - Tunggal</span><span class="form-text"><code>This + Noun (tunggal) + is</code></span></div>
+          <div class="form-row"><span class="form-label">Jauh - Tunggal</span><span class="form-text"><code>That + Noun (tunggal) + is</code></span></div>
+          <div class="form-row"><span class="form-label">Dekat - Jamak</span><span class="form-text"><code>These + Noun (jamak) + are</code></span></div>
+          <div class="form-row"><span class="form-label">Jauh - Jamak</span><span class="form-text"><code>Those + Noun (jamak) + are</code></span></div>
+          <div class="mat-vocab">
+            <div class="mat-vocab-label"><i class="fas fa-book"></i> Kosakata</div>
+            <div class="vocab-list">
+              <div class="vocab-item"><span>this</span><strong>ini</strong></div>
+              <div class="vocab-item"><span>that</span><strong>itu</strong></div>
+              <div class="vocab-item"><span>these</span><strong>ini (jamak)</strong></div>
+              <div class="vocab-item"><span>those</span><strong>itu (jamak)</strong></div>
+              <div class="vocab-item"><span>interesting</span><strong>menarik</strong></div>
+              <div class="vocab-item"><span>fresh</span><strong>segar</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="material-card green">
+          <div class="mat-icon"><i class="fas fa-balance-scale"></i></div>
+          <h3 class="mat-title">Both, Either, Neither</h3>
+          <p class="mat-desc">Digunakan untuk membicarakan dua hal/orang sekaligus.</p>
+          <div class="form-row"><span class="form-label">Both (+) keduanya</span><span class="form-text"><code>Both of them + are/plural</code></span></div>
+          <div class="form-row"><span class="form-label">Either (pilih salah satu)</span><span class="form-text"><code>Either of them + is/singular</code></span></div>
+          <div class="form-row"><span class="form-label">Neither (-) tidak keduanya</span><span class="form-text"><code>Neither of them + is (verb positif)</code></span></div>
+          <div class="mat-vocab">
+            <div class="mat-vocab-label"><i class="fas fa-book"></i> Kosakata</div>
+            <div class="vocab-list">
+              <div class="vocab-item"><span>both</span><strong>keduanya</strong></div>
+              <div class="vocab-item"><span>either</span><strong>salah satu</strong></div>
+              <div class="vocab-item"><span>neither</span><strong>tidak keduanya</strong></div>
+              <div class="vocab-item"><span>of them</span><strong>dari mereka</strong></div>
+              <div class="vocab-item"><span>wrong</span><strong>salah</strong></div>
+              <div class="vocab-item"><span>good</span><strong>baik</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="material-card red">
+          <div class="mat-icon"><i class="fas fa-layer-group"></i></div>
+          <h3 class="mat-title">This One & The Others</h3>
+          <p class="mat-desc">Menentukan benda tertentu di antara beberapa benda lain.</p>
+          <div class="form-row"><span class="form-label">Memilih satu</span><span class="form-text"><code>I want this one.</code></span></div>
+          <div class="form-row"><span class="form-label">Dari 2 benda</span><span class="form-text"><code>One..., the other one...</code></span></div>
+          <div class="form-row"><span class="form-label">Sisanya (grup)</span><span class="form-text"><code>Some..., the others...</code></span></div>
+          <div class="form-row"><span class="form-label">Satu lagi</span><span class="form-text"><code>Can I have another one?</code></span></div>
+          <div class="mat-vocab">
+            <div class="mat-vocab-label"><i class="fas fa-book"></i> Kosakata</div>
+            <div class="vocab-list">
+              <div class="vocab-item"><span>this one</span><strong>yang ini</strong></div>
+              <div class="vocab-item"><span>the other one</span><strong>yang satunya</strong></div>
+              <div class="vocab-item"><span>the others</span><strong>yang lainnya</strong></div>
+              <div class="vocab-item"><span>another one</span><strong>satu lagi</strong></div>
+              <div class="vocab-item"><span>absent</span><strong>absen/tidak hadir</strong></div>
+              <div class="vocab-item"><span>present</span><strong>hadir</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="material-card purple">
+          <div class="mat-icon"><i class="fas fa-arrow-up"></i></div>
+          <h3 class="mat-title">Comparative & Superlative</h3>
+          <p class="mat-desc">Membandingkan dua hal (comparative) atau menunjukkan yang paling (superlative).</p>
+          <div class="form-row"><span class="form-label">Comparative</span><span class="form-text"><code>-er + than / more + adj + than</code></span></div>
+          <div class="form-row"><span class="form-label">Superlative</span><span class="form-text"><code>the -est / the most + adj</code></span></div>
+          <div class="form-row"><span class="form-label">Tidak beraturan</span><span class="form-text"><code>good→better→the best; bad→worse→the worst</code></span></div>
+          <div class="mat-vocab">
+            <div class="mat-vocab-label"><i class="fas fa-book"></i> Kosakata</div>
+            <div class="vocab-list">
+              <div class="vocab-item"><span>bigger</span><strong>lebih besar</strong></div>
+              <div class="vocab-item"><span>the biggest</span><strong>paling besar</strong></div>
+              <div class="vocab-item"><span>more expensive</span><strong>lebih mahal</strong></div>
+              <div class="vocab-item"><span>the smartest</span><strong>paling pintar</strong></div>
+              <div class="vocab-item"><span>the best</span><strong>paling bagus</strong></div>
+              <div class="vocab-item"><span>than</span><strong>dari</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="material-card blue">
+          <div class="mat-icon"><i class="fas fa-thumbs-up"></i></div>
+          <h3 class="mat-title">Should / Shouldn't</h3>
+          <p class="mat-desc">Memberi saran atau nasihat: sebaiknya melakukan sesuatu atau tidak.</p>
+          <div class="form-row"><span class="form-label">Saran positif</span><span class="form-text"><code>S + should + V1</code></span></div>
+          <div class="form-row"><span class="form-label">Saran negatif</span><span class="form-text"><code>S + shouldn't + V1</code></span></div>
+          <div class="form-row"><span class="form-label">Tanya</span><span class="form-text"><code>Should + S + V1?</code></span></div>
+          <div class="mat-vocab">
+            <div class="mat-vocab-label"><i class="fas fa-book"></i> Kosakata</div>
+            <div class="vocab-list">
+              <div class="vocab-item"><span>should</span><strong>sebaiknya</strong></div>
+              <div class="vocab-item"><span>shouldn't</span><strong>sebaiknya tidak</strong></div>
+              <div class="vocab-item"><span>study harder</span><strong>belajar lebih giat</strong></div>
+              <div class="vocab-item"><span>too much</span><strong>terlalu banyak</strong></div>
+              <div class="vocab-item"><span>candy</span><strong>permen</strong></div>
+              <div class="vocab-item"><span>advice</span><strong>saran/nasihat</strong></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ EXERCISE PAGE ============================ -->
+  <section class="page" id="exercise-page">
+    <div class="container">
+      <div class="topbar">
+        <div class="topbar-left">
+          <button class="back-btn" onclick="goToPage('material-page')" aria-label="Kembali"><i class="fas fa-arrow-left"></i></button>
+          <div class="user-pill">
+            <div class="avatar" id="avatarEx">A</div>
+            <div class="name" id="userNameEx">Siswa</div>
+          </div>
+        </div>
+      </div>
+
+      <h2 class="page-title">Latihan <span class="accent">Soal</span></h2>
+      <p class="page-sub">Kerjakan kedua bagian tes berikut. Part 1 menyusun kalimat dari kata-kata acak, Part 2 melengkapi kalimat dengan kata yang tepat.</p>
+
+      <div class="q-nav-bar" id="navBar"></div>
+
+      <div class="section-title"><span class="pill">Part 1</span> Menyusun Kalimat (20 Soal)</div>
+      <p class="section-desc">Terjemahkan kalimat Bahasa Indonesia berikut ke Bahasa Inggris dengan menekan kata-kata yang tersedia.</p>
+      <div id="part1Container"></div>
+
+      <div class="section-title"><span class="pill green">Part 2</span> Melengkapi Kalimat (20 Soal)</div>
+      <p class="section-desc">Lengkapi kalimat Bahasa Inggris berikut dengan kata yang tepat.</p>
+      <div id="part2Container"></div>
+
+    </div>
+
+    <div class="finish-bar">
+      <div class="progress-stat">
+        <i class="fas fa-check-circle" style="color:var(--green)"></i>
+        <span id="progCorrect">0</span> / 40
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progBar"></div></div>
+      <button class="btn btn-coral" onclick="finishExam()"><i class="fas fa-flag-checkered"></i> Finish Exam</button>
+    </div>
+  </section>
+
+  <!-- ============================ RESULT PAGE ============================ -->
+  <section class="page" id="result-page">
+    <div class="container">
+      <div class="result-container">
+        <i class="fas fa-trophy result-trophy"></i>
+        <h2 class="result-title">Exam Finished!</h2>
+        <p class="thank-you">Thank you for today, <span id="finalName">Student</span>!</p>
+
+        <div class="score-circle">
+          <div class="score-num" id="finalScore">0</div>
+          <div class="score-label">Skor Akhir</div>
+        </div>
+
+        <div class="stats-row">
+          <div class="stat-box">
+            <div class="stat-num" id="finalCorrect">0</div>
+            <div class="stat-label">Jawaban Benar</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num" id="finalAnswered">0</div>
+            <div class="stat-label">Soal Dijawab</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">40</div>
+            <div class="stat-label">Total Soal</div>
+          </div>
+        </div>
+
+        <div class="reflection-box">
+          <h3><i class="fas fa-lightbulb" style="color:var(--amber)"></i> Kesimpulan & Refleksi</h3>
+          <p id="finalReflection"></p>
+        </div>
+
+        <button class="btn btn-primary" onclick="goToPage('cover-page')"><i class="fas fa-redo"></i> Kembali ke Awal</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ============================ DATA SOAL ============================ */
+
+// Part 1: Menyusun Kalimat (20 Soal)
+const part1Data = [
+  { text: "Saya akan pergi ke sekolah besok pagi.", answer: ["I", "will", "go", "to", "school", "tomorrow", "morning"], bank: ["I", "will", "shall", "go", "goes", "to", "school", "tomorrow", "yesterday", "morning"], exp: "Simple Future Tense. Menggunakan 'will' + V1 (go). Time signal 'tomorrow' menunjukkan masa depan." },
+  { text: "Dia (lk) akan membeli buku baru minggu depan.", answer: ["He", "will", "buy", "a", "new", "book", "next", "week"], bank: ["He", "She", "will", "buy", "buys", "a", "new", "book", "next", "week"], exp: "Simple Future Tense. 'He will buy' — setelah 'will' selalu gunakan V1, bukan V-ing." },
+  { text: "Boleh saya bantu kamu?", answer: ["Can", "I", "help", "you", "?"], bank: ["Can", "May", "I", "help", "helps", "you", "your", "?"], exp: "Offering Help. 'Can I help you?' adalah ungkapan menawarkan bantuan yang paling umum." },
+  { text: "Apakah kamu ingin saya membawakan tas itu?", answer: ["Would", "you", "like", "me", "to", "carry", "that", "bag", "?"], bank: ["Would", "Do", "you", "like", "me", "to", "carry", "carrying", "that", "bag", "?"], exp: "Offering Help. Pola 'Would you like me to + V1...?' untuk menawarkan diri melakukan sesuatu." },
+  { text: "Buku ini sangat menarik.", answer: ["This", "book", "is", "very", "interesting"], bank: ["This", "These", "book", "books", "is", "are", "very", "interesting"], exp: "Kata Ganti Tunjuk. 'This' untuk benda tunggal dekat, diikuti to be 'is'." },
+  { text: "Bunga-bunga itu indah.", answer: ["Those", "flowers", "are", "beautiful"], bank: ["That", "Those", "flower", "flowers", "is", "are", "beautiful"], exp: "Kata Ganti Tunjuk. 'Those' untuk benda jamak jauh, diikuti to be 'are'." },
+  { text: "Apakah apel-apel ini segar?", answer: ["Are", "these", "apples", "fresh", "?"], bank: ["Is", "Are", "this", "these", "apple", "apples", "fresh", "?"], exp: "Kata Ganti Tunjuk. 'These' untuk benda jamak dekat; to be 'Are' di depan untuk kalimat tanya." },
+  { text: "Tas itu mahal.", answer: ["That", "bag", "is", "expensive"], bank: ["This", "That", "bag", "bags", "is", "are", "expensive"], exp: "Kata Ganti Tunjuk. 'That' untuk benda tunggal jauh, diikuti to be 'is'." },
+  { text: "Keduanya adalah siswa yang baik.", answer: ["Both", "of", "them", "are", "good", "students"], bank: ["Both", "Either", "Neither", "of", "them", "are", "is", "good", "students"], exp: "Both = keduanya (2 orang/hal), diikuti 'of them' + verb jamak 'are'." },
+  { text: "Tidak keduanya salah.", answer: ["Neither", "of", "them", "is", "wrong"], bank: ["Both", "Either", "Neither", "of", "them", "are", "is", "wrong"], exp: "Neither = tidak keduanya. Meski maknanya negatif, verb tetap POSITIF singular: 'Neither...is'." },
+  { text: "Salah satu dari mereka ada di sini.", answer: ["Either", "of", "them", "is", "here"], bank: ["Both", "Either", "Neither", "of", "them", "are", "is", "here"], exp: "Either = salah satu dari keduanya, diikuti verb singular 'is'." },
+  { text: "Saya mau yang ini.", answer: ["I", "want", "this", "one"], bank: ["I", "want", "wants", "this", "that", "one", "ones"], exp: "'This one' berarti 'yang ini'. 'One' menggantikan kata benda agar tidak diulang." },
+  { text: "Satu berwarna merah dan yang satunya berwarna biru.", answer: ["One", "is", "red", "and", "the", "other", "one", "is", "blue"], bank: ["One", "Two", "is", "are", "red", "blue", "and", "the", "other", "another", "one"], exp: "Untuk membandingkan 2 benda: 'One..., the other one...' (yang satu..., yang satunya...)." },
+  { text: "Beberapa siswa ada di sini dan yang lainnya absen.", answer: ["Some", "students", "are", "here", "and", "the", "others", "are", "absent"], bank: ["Some", "students", "are", "here", "and", "the", "others", "other", "absent", "present"], exp: "'The others' = yang lainnya (sisanya dari suatu grup, bentuk jamak)." },
+  { text: "Gajah lebih besar dari kucing.", answer: ["An", "elephant", "is", "bigger", "than", "a", "cat"], bank: ["An", "The", "elephant", "is", "are", "bigger", "big", "than", "a", "cat"], exp: "Comparative. Kata sifat 1 suku kata: tambah '-er' + 'than'. 'bigger' = lebih besar." },
+  { text: "Buku ini lebih mahal dari buku itu.", answer: ["This", "book", "is", "more", "expensive", "than", "that", "book"], bank: ["This", "That", "book", "is", "are", "more", "most", "expensive", "than", "that"], exp: "Comparative. Kata sifat 3+ suku kata: 'more' + adjective + 'than'." },
+  { text: "Dia (pr) adalah siswa yang paling pintar di kelas.", answer: ["She", "is", "the", "smartest", "student", "in", "the", "class"], bank: ["She", "is", "the", "a", "smart", "smartest", "student", "in", "on", "the", "class"], exp: "Superlative. 'the smartest' = paling pintar (adjective 1-2 suku kata: the -est)." },
+  { text: "Ini adalah film yang paling bagus.", answer: ["This", "is", "the", "best", "movie"], bank: ["This", "That", "is", "the", "a", "good", "best", "movie"], exp: "Superlative tidak beraturan: good → better → the best. 'the best movie' = film terbaik." },
+  { text: "Kamu sebaiknya belajar lebih giat.", answer: ["You", "should", "study", "harder"], bank: ["You", "should", "shouldn't", "study", "studies", "harder"], exp: "Should untuk saran positif: 'You should + V1' (kamu sebaiknya...). Setelah 'should' pakai V1." },
+  { text: "Kamu sebaiknya tidak makan terlalu banyak permen.", answer: ["You", "shouldn't", "eat", "too", "much", "candy"], bank: ["You", "should", "shouldn't", "eat", "eats", "too", "much", "many", "candy"], exp: "Shouldn't untuk saran negatif: 'You shouldn't + V1' (kamu sebaiknya tidak...)." }
+];
+
+// Part 2: Melengkapi Kalimat (20 Soal)
+const part2Data = [
+  { text: "I _____ go to school tomorrow.", options: ["will", "was", "did", "am"], answer: 0, exp: "Simple Future. 'will' + V1 (go) untuk kegiatan masa depan yang ditandai 'tomorrow'." },
+  { text: "She _____ visit her grandmother next week.", options: ["will", "was", "are", "does"], answer: 0, exp: "Simple Future. 'will' digunakan untuk semua subjek tanpa perubahan bentuk." },
+  { text: "_____ I help you carry those bags?", options: ["Can", "Is", "Are", "Am"], answer: 0, exp: "Offering Help. 'Can I help you...?' untuk menawarkan bantuan." },
+  { text: "Would you like me to _____ you?", options: ["help", "helps", "helped", "helping"], answer: 0, exp: "Offering Help. Setelah 'to' gunakan V1: 'would you like me to help you?'." },
+  { text: "_____ book is very interesting.", options: ["This", "These", "Those", "Them"], answer: 0, exp: "Kata Ganti Tunjuk. 'book' tunggal + dekat → 'This book is'." },
+  { text: "_____ flowers are beautiful.", options: ["Those", "This", "That", "It"], answer: 0, exp: "Kata Ganti Tunjuk. 'flowers' jamak + jauh → 'Those flowers are'." },
+  { text: "_____ apples are fresh.", options: ["These", "This", "That", "There"], answer: 0, exp: "Kata Ganti Tunjuk. 'apples' jamak + dekat → 'These apples are'." },
+  { text: "_____ bag is expensive.", options: ["That", "Those", "These", "Them"], answer: 0, exp: "Kata Ganti Tunjuk. 'bag' tunggal + jauh → 'That bag is'." },
+  { text: "_____ of them are good students.", options: ["Both", "Either", "Neither", "None"], answer: 0, exp: "Both + verb jamak. 'Both of them are...' = keduanya adalah..." },
+  { text: "_____ of them is wrong.", options: ["Neither", "Both", "All", "Either"], answer: 0, exp: "Neither + verb positif singular. 'Neither of them is...' = tidak keduanya salah." },
+  { text: "_____ of them is here.", options: ["Either", "Both", "All", "None"], answer: 0, exp: "Either = salah satu dari dua, diikuti verb singular 'is'." },
+  { text: "I want _____ one.", options: ["this", "these", "those", "them"], answer: 0, exp: "'this one' = yang ini. 'one' tunggal harus dipasangkan dengan 'this'." },
+  { text: "One is red, _____ other one is blue.", options: ["the", "a", "an", "this"], answer: 0, exp: "'the other one' = yang satunya (dari 2 benda). Selalu pakai 'the'." },
+  { text: "Some students are here, the _____ are absent.", options: ["others", "other", "another", "one"], answer: 0, exp: "'the others' = yang lainnya (sisanya dari grup, bentuk jamak)." },
+  { text: "An elephant is _____ than a cat.", options: ["bigger", "big", "biggest", "more big"], answer: 0, exp: "Comparative. Adjective 1 suku kata + '-er' + than: 'bigger than'." },
+  { text: "This book is _____ expensive than that book.", options: ["more", "most", "much", "many"], answer: 0, exp: "Comparative. Adjective panjang (3+ suku kata) pakai 'more' + adjective + than." },
+  { text: "She is _____ smartest student in the class.", options: ["the", "a", "an", "this"], answer: 0, exp: "Superlative selalu diawali 'the': 'the smartest' = paling pintar." },
+  { text: "This is _____ best movie.", options: ["the", "a", "an", "than"], answer: 0, exp: "Superlative 'the best' = paling bagus. Good → better → the best." },
+  { text: "You _____ study harder.", options: ["should", "shouldn't", "shall", "are"], answer: 0, exp: "Should untuk saran positif: 'You should study' = kamu sebaiknya belajar." },
+  { text: "You _____ eat too much candy.", options: ["shouldn't", "should", "shall", "can"], answer: 0, exp: "Shouldn't untuk saran negatif: 'You shouldn't eat' = kamu sebaiknya tidak makan." }
+];
+
+/* ============================ STATE & LOGIC ============================ */
+let studentName = '';
+let userState = { part1: {}, part2: {} };
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function init() {
+  part1Data.forEach((q, i) => {
+    userState.part1[i] = { userAnswers: [], checked: false, isCorrect: false };
+  });
+  part2Data.forEach((q, i) => {
+    userState.part2[i] = { selected: null, checked: false, isCorrect: false };
+  });
+
+  renderNavBar();
+  renderPart1();
+  renderPart2();
+
+  const nameInput = document.getElementById('studentName');
+  const startBtn = document.getElementById('startBtn');
+  nameInput.addEventListener('input', () => {
+    startBtn.disabled = nameInput.value.trim().length < 2;
+  });
+  nameInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (nameInput.value.trim().length >= 2) document.getElementById('nameForm').requestSubmit();
+    }
+  });
+  document.getElementById('nameForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (nameInput.value.trim().length < 2) return;
+    studentName = nameInput.value.trim();
+    setUserName(studentName);
+    goToPage('material-page');
+  });
+}
+
+function setUserName(name) {
+  const initial = name.charAt(0).toUpperCase();
+  ['avatarMat', 'avatarEx'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = initial;
+  });
+  ['userNameMat', 'userNameEx'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = name;
+  });
+}
+
+function goToPage(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderNavBar() {
+  const nav = document.getElementById('navBar');
+  let html = '';
+  for (let i = 0; i < 20; i++) {
+    let cls = 'q-nav-item';
+    if (userState.part1[i].checked) cls += userState.part1[i].isCorrect ? ' correct' : ' wrong';
+    html += `<div class="${cls}" onclick="document.getElementById('q-part1-${i}').scrollIntoView({behavior:'smooth', block:'center'})">${i + 1}</div>`;
+  }
+  for (let i = 0; i < 20; i++) {
+    let cls = 'q-nav-item';
+    if (userState.part2[i].checked) cls += userState.part2[i].isCorrect ? ' correct' : ' wrong';
+    html += `<div class="${cls}" onclick="document.getElementById('q-part2-${i}').scrollIntoView({behavior:'smooth', block:'center'})">${i + 21}</div>`;
+  }
+  nav.innerHTML = html;
+}
+
+function renderPart1() {
+  const container = document.getElementById('part1Container');
+  let html = '';
+  part1Data.forEach((q, i) => {
+    html += `
+      <div class="question-block" id="q-part1-${i}">
+        <div class="q-header">
+          <div class="q-num">${i + 1}</div>
+          <div class="q-text">${q.text}</div>
+          <div class="q-status"></div>
+        </div>
+        <div class="answer-area" id="answer-area-part1-${i}"></div>
+        <div class="word-bank" id="word-bank-part1-${i}"></div>
+        <div class="q-actions">
+          <button class="btn btn-primary" onclick="checkAnswer('part1', ${i})"><i class="fas fa-check"></i> Cek Jawaban</button>
+          <button class="btn btn-secondary" onclick="toggleExplanation('part1', ${i})"><i class="fas fa-eye"></i> Pembahasan</button>
+          <button class="btn btn-ghost" onclick="resetQuestion('part1', ${i})"><i class="fas fa-redo"></i> Reset</button>
+        </div>
+        <div class="explanation-box" id="exp-part1-${i}">
+          <i class="fas fa-lightbulb"></i> <strong>Pembahasan:</strong> ${q.exp}
+        </div>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+  for (let i = 0; i < part1Data.length; i++) {
+    renderAnswerArea('part1', i);
+    renderWordBank('part1', i);
+  }
+}
+
+function renderPart2() {
+  const container = document.getElementById('part2Container');
+  let html = '';
+  part2Data.forEach((q, i) => {
+    const text = q.text.replace('_____', '<span class="blank"></span>');
+    html += `
+      <div class="question-block" id="q-part2-${i}">
+        <div class="q-header">
+          <div class="q-num">${i + 21}</div>
+          <div class="q-text">${text}</div>
+          <div class="q-status"></div>
+        </div>
+        <div class="options-grid" id="options-part2-${i}"></div>
+        <div class="q-actions">
+          <button class="btn btn-primary" onclick="checkAnswer('part2', ${i})"><i class="fas fa-check"></i> Cek Jawaban</button>
+          <button class="btn btn-secondary" onclick="toggleExplanation('part2', ${i})"><i class="fas fa-eye"></i> Pembahasan</button>
+          <button class="btn btn-ghost" onclick="resetQuestion('part2', ${i})"><i class="fas fa-redo"></i> Reset</button>
+        </div>
+        <div class="explanation-box" id="exp-part2-${i}">
+          <i class="fas fa-lightbulb"></i> <strong>Pembahasan:</strong> ${q.exp}
+        </div>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+  for (let i = 0; i < part2Data.length; i++) {
+    renderOptions('part2', i);
+  }
+}
+
+function renderAnswerArea(part, qIdx) {
+  const area = document.getElementById(`answer-area-${part}-${qIdx}`);
+  if (!area) return;
+  const state = userState[part][qIdx];
+  if (state.userAnswers.length === 0) {
+    area.innerHTML = '<span class="placeholder">Klik kata-kata di bawah untuk menyusun kalimat...</span>';
+  } else {
+    area.innerHTML = state.userAnswers.map((ans, idx) =>
+      `<button class="word-tile answer-tile" onclick="removeWord('${part}', ${qIdx}, ${idx})" ${state.checked ? 'disabled' : ''}>${ans.text}</button>`
+    ).join('');
+  }
+}
+
+function renderWordBank(part, qIdx) {
+  const bank = document.getElementById(`word-bank-${part}-${qIdx}`);
+  if (!bank) return;
+  const state = userState[part][qIdx];
+
+  if (!state.bankTiles) {
+    const q = part1Data[qIdx];
+    state.bankTiles = shuffleArray(q.bank.map((text, idx) => ({ id: idx, text })));
+  }
+
+  bank.innerHTML = state.bankTiles.map(tile => {
+    const isUsed = state.userAnswers.some(ans => ans.id === tile.id);
+    return `<button class="word-tile bank-tile ${isUsed ? 'used' : ''}" onclick="addWord('${part}', ${qIdx}, ${tile.id})" ${isUsed || state.checked ? 'disabled' : ''}>${tile.text}</button>`;
+  }).join('');
+}
+
+function renderOptions(part, qIdx) {
+  const container = document.getElementById(`options-${part}-${qIdx}`);
+  const state = userState[part][qIdx];
+  const q = part2Data[qIdx];
+
+  container.innerHTML = q.options.map((opt, i) => {
+    let cls = 'option';
+    if (state.checked) {
+      if (i === q.answer) cls += ' correct-answer';
+      else if (i === state.selected) cls += ' wrong-answer';
+      cls += ' disabled';
+    } else if (i === state.selected) {
+      cls += ' selected';
+    }
+    return `<button class="${cls}" onclick="selectOption('${part}', ${qIdx}, ${i})" ${state.checked ? 'disabled' : ''}>
+      <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+      <span>${opt}</span>
+    </button>`;
+  }).join('');
+}
+
+function addWord(part, qIdx, tileId) {
+  const state = userState[part][qIdx];
+  if (state.checked) return;
+  const tile = state.bankTiles.find(t => t.id === tileId);
+  state.userAnswers.push({ ...tile });
+  renderAnswerArea(part, qIdx);
+  renderWordBank(part, qIdx);
+}
+
+function removeWord(part, qIdx, ansIndex) {
+  const state = userState[part][qIdx];
+  if (state.checked) return;
+  state.userAnswers.splice(ansIndex, 1);
+  renderAnswerArea(part, qIdx);
+  renderWordBank(part, qIdx);
+}
+
+function selectOption(part, qIdx, optIdx) {
+  const state = userState[part][qIdx];
+  if (state.checked) return;
+  state.selected = optIdx;
+  renderOptions(part, qIdx);
+}
+
+function checkAnswer(part, qIdx) {
+  const state = userState[part][qIdx];
+  state.checked = true;
+
+  if (part === 'part1') {
+    const q = part1Data[qIdx];
+    const userText = state.userAnswers.map(a => a.text).join(' ');
+    const correctText = q.answer.join(' ');
+    state.isCorrect = (userText === correctText);
+  } else if (part === 'part2') {
+    const q = part2Data[qIdx];
+    state.isCorrect = (state.selected === q.answer);
+  }
+
+  renderQuestion(part, qIdx);
+  renderNavBar();
+  updateProgress();
+}
+
+function toggleExplanation(part, qIdx) {
+  const exp = document.getElementById(`exp-${part}-${qIdx}`);
+  exp.classList.toggle('show');
+}
+
+function resetQuestion(part, qIdx) {
+  if (part === 'part1') {
+    userState[part][qIdx] = { userAnswers: [], checked: false, isCorrect: false, bankTiles: userState[part][qIdx].bankTiles };
+  } else {
+    userState[part][qIdx] = { selected: null, checked: false, isCorrect: false };
+  }
+  renderQuestion(part, qIdx);
+  renderNavBar();
+  updateProgress();
+}
+
+function renderQuestion(part, qIdx) {
+  const state = userState[part][qIdx];
+  const block = document.getElementById(`q-${part}-${qIdx}`);
+
+  block.classList.remove('correct', 'wrong');
+  const statusEl = block.querySelector('.q-status');
+  statusEl.innerHTML = '';
+
+  if (state.checked) {
+    if (state.isCorrect) {
+      block.classList.add('correct');
+      statusEl.innerHTML = '<i class="fas fa-check-circle"></i> Benar';
+    } else {
+      block.classList.add('wrong');
+      statusEl.innerHTML = '<i class="fas fa-times-circle"></i> Salah';
+    }
+  }
+
+  if (part === 'part1') {
+    renderAnswerArea(part, qIdx);
+    renderWordBank(part, qIdx);
+  } else if (part === 'part2') {
+    renderOptions(part, qIdx);
+  }
+}
+
+function updateProgress() {
+  let correct = 0;
+  let answered = 0;
+  for (const part in userState) {
+    for (const qIdx in userState[part]) {
+      if (userState[part][qIdx].checked) {
+        answered++;
+        if (userState[part][qIdx].isCorrect) correct++;
+      }
+    }
+  }
+  document.getElementById('progCorrect').textContent = correct;
+  document.getElementById('progBar').style.width = (answered / 40 * 100) + '%';
+}
+
+function finishExam() {
+  let correct = 0;
+  let answered = 0;
+  for (const part in userState) {
+    for (const qIdx in userState[part]) {
+      if (userState[part][qIdx].checked) {
+        answered++;
+        if (userState[part][qIdx].isCorrect) correct++;
+      }
+    }
+  }
+  const total = 40;
+  const score = Math.round((correct / total) * 100);
+
+  document.getElementById('finalName').textContent = studentName;
+  document.getElementById('finalScore').textContent = score;
+  document.getElementById('finalCorrect').textContent = correct;
+  document.getElementById('finalAnswered').textContent = answered;
+
+  let reflection = '';
+  if (score >= 90) reflection = `Luar biasa, ${studentName}! Kamu telah menguasai seluruh materi: Simple Future, Offering Help, Demonstratives, Both/Either/Neither, The Others, Comparative & Superlative, serta Should/Shouldn't. Pertahankan terus kemampuanmu!`;
+  else if (score >= 70) reflection = `Kerja bagus, ${studentName}! Pemahamanmu sudah cukup baik. Cermati kembali soal yang salah — perhatikan pola comparative (-er/more + than), superlative (the -est/the most), dan verb yang menyertai Both/Either/Neither.`;
+  else if (score >= 50) reflection = `Cukup baik, ${studentName}. Kamu sudah memahami dasar-dasarnya, namun perlu memperdalam materi kata ganti tunjuk (this/that/these/those) dan ungkapan offering help. Pelajari kembali kosakata di halaman materi.`;
+  else reflection = `Jangan menyerah, ${studentName}! Bahasa Inggris membutuhkan latihan rutin. Baca kembali materi pada halaman awal, hafalkan kosakata dan pola kalimatnya, lalu kerjakan latihan ini lagi dengan lebih teliti.`;
+
+  document.getElementById('finalReflection').textContent = reflection;
+
+  goToPage('result-page');
+}
+
+init();
+</script>
+
+</body>
+</html>
